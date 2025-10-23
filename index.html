@@ -80,9 +80,12 @@
                     </div>
                 </div>
             </main>
+        </div>
+        
         <!-- Footer -->
-       <footer class="bg-primary-dark text-gray-400 text-center p-4 text-sm rounded-b-3xl">
-    © <span id="year"></span> The Feline Encyclopedia — Powered by Gemini 🐾</footer>
+        <footer class="bg-primary-dark text-gray-400 text-center p-4 text-sm rounded-b-3xl">
+            © <span id="year"></span> The Feline Encyclopedia — Powered by Gemini 🐾
+        </footer>
     </div>
 
     <script>
@@ -129,9 +132,7 @@
 
         let activeTopic = null;
 
-        /**
-         * Generates the navigation buttons from the catData object.
-         */
+        // --- Functions ---
         function renderTabs() {
             const tabsContainer = document.getElementById('tabs');
             tabsContainer.innerHTML = ''; // Clear existing tabs
@@ -146,23 +147,17 @@
                 tabsContainer.appendChild(button);
             });
 
-            // Automatically show the first topic on load
             if (Object.keys(catData).length > 0) {
                 showContent(Object.keys(catData)[0]);
             }
         }
 
-        /**
-         * Renders the content for the selected topic in the main content area.
-         * @param {string} topic - The key of the selected topic (e.g., 'Breeds').
-         */
         function showContent(topic) {
             const data = catData[topic];
             const contentDisplay = document.getElementById('content-display');
             const initialMessage = document.getElementById('initial-message');
             const tabs = document.querySelectorAll('.tab-button');
 
-            // 1. Update Active Tab Styling
             tabs.forEach(tab => {
                 tab.classList.remove('bg-accent-blue', 'text-white', 'shadow-lg');
                 tab.classList.add('bg-gray-50', 'text-primary-dark');
@@ -174,15 +169,12 @@
                 activeTab.classList.add('bg-accent-blue', 'text-white', 'shadow-lg');
             }
 
-            // 2. Hide initial message and show content display
             initialMessage.classList.add('hidden');
             contentDisplay.classList.remove('hidden');
 
-            // 3. Render Content
             let htmlContent = `<h2 class="text-3xl md:text-4xl font-extrabold text-primary-dark mb-6 border-b-4 border-accent-blue pb-2">${data.icon} ${data.title}</h2>`;
 
             if (data.type === 'card-list') {
-                // Renders the Breeds section as a responsive grid of cards
                 htmlContent += `<div class="grid grid-cols-1 md:grid-cols-3 gap-6">`;
                 data.content.forEach(item => {
                     htmlContent += `
@@ -195,7 +187,6 @@
                 });
                 htmlContent += `</div>`;
             } else if (data.type === 'text') {
-                // Renders History/Behavior as a main text block with an image
                 htmlContent += `
                     <div class="flex flex-col lg:flex-row gap-6">
                         <div class="lg:w-2/3">
@@ -207,7 +198,6 @@
                     </div>
                 `;
             } else if (data.type === 'list') {
-                // Renders Facts as a simple list
                 htmlContent += `<ul class="space-y-4 text-lg text-gray-700 list-disc list-inside">`;
                 data.content.forEach(fact => {
                     htmlContent += `<li class="p-3 bg-blue-50 rounded-lg shadow-sm">${fact}</li>`;
@@ -220,10 +210,10 @@
         }
 
         // --- Initialization ---
-       document.addEventListener('DOMContentLoaded', () => {
-    renderTabs();
-    document.getElementById('year').textContent = new Date().getFullYear();
-        );
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTabs();
+            document.getElementById('year').textContent = new Date().getFullYear();
+        });
     </script>
 
 </body>
